@@ -71,7 +71,6 @@ def select_neuron():
     weight=torch.load('mnist_cnn.pt')['fc1.weight']
     abs_weight=torch.abs(weight)
     sum_weight=torch.sum(abs_weight,1)
-    sum_weight=torch.sum(weight,1)
     max_number,max_index=torch.max(sum_weight,0)
     return max_index
 
