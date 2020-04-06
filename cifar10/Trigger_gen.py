@@ -72,20 +72,21 @@ def generate():
     model=initial_model()
     mask=initial_mask()#mask
     data=initial_trigger(mask)#data
-    epochs=3000
+    epochs=5000
     target=100.0
     threshod=100.0
     index=select_channel(model)
-    optimizer =optim.Adam([data],lr=0.015)
+    optimizer =optim.Adam([data],lr=0.1)
     for i in range(epochs):
         optimizer.zero_grad()
         value=layer_value(model,data)
-        specific_value=value[0][index].view(8*8)[45]  #1*64*8*8
+        specific_value=value[0][index]  #1*64*8*8
+        specific_value=specific_value[4:7,4:7].reshape(3*3)
         #specific_value=value[0][index].view(16*16)
         #specific_value=value[0][index].view(32*32)  
-        #target_value=torch.FloatTensor(specific_value.shape[0]).fill_(target).to(device)
-        #cost=F.mse_loss(specific_value,target_value)
-        cost=torch.pow((specific_value-target),2)
+        target_value=torch.FloatTensor(specific_value.shape[0]).fill_(target).to(device)
+        cost=F.mse_loss(specific_value,target_value)
+        #cost=torch.pow((specific_value-target),2)
         if cost<=threshod:
             break
         print("times:{},cost:{},value:{}".format(i,cost.data,torch.mean(specific_value).data))
