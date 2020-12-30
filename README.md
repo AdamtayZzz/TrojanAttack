@@ -9,7 +9,11 @@ This implementation is an experiment that try to generate trigger by maximizing 
 resnet.py : The implmentation of Resnet is created by Yerlan Idelbayev,please check the [repo](https://github.com/akamaster/pytorch_resnet_cifar10).
 ### Main Idea
 Assume that the filter is (In_channels,out_channel,kernel size).
+
 Fistly,get the absolute value of weights
+
 Secondly,get average weight of each kernel
+
 Thirdly,select the most connected output channel
+
 Lastly,maximize the neurons that match the position of the input trigger
